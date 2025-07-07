@@ -128,7 +128,13 @@ echo "Pre-scaling video to ${SCREEN_W}x${SCREEN_H}. This may take a moment..."
 # -y: Overwrite output file if it exists
 # -an: Strip audio stream, as it's not needed
 # -c:v libx264 -preset ultrafast: Fast encoding for low-power devices
-ffmpeg -y -i "$VIDEO_SOURCE" -vf "scale=${SCREEN_W}:${SCREEN_H}" -c:v libx264 -preset ultrafast -an "$TEMP_VIDEO_FILE" > /dev/null 2>&1
+ffmpeg -y -i "$VIDEO_SOURCE" -filter_complex "scale=${SCREEN_W}:${SCREEN_H},split[v1][i];[i]drawtext=fontfile='${FONT_FILE}':\
+                      text='Loading...':\
+                      fontcolor=${TEXT_COLOR}:\
+                      box=1:boxcolor=${TEXT_BG_COLOR}:boxborderw=15:\
+                      fontsize=${LARGE_FONT_SIZE}:\
+                      x=(w-text_w)/2:\
+                      y=(h-text_h)/2[v2]" -map "[v1]" -c:v libx264 -preset ultrafast -an "$TEMP_VIDEO_FILE" -map "[v2]" -pix_fmt bgra -f fbdev "$FRAMEBUFFER" > /dev/null 2>&1
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to pre-scale the video." >&2
