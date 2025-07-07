@@ -31,26 +31,42 @@ apk add screen ffmpeg font-dejavu
 
 ## **Installation**
 
-1. Place the Script:  
+1. Download the Zip File
+   Use wget to download the zip file from the github repository.
+   ```
+   wget https://github.com/XtendedGreg/digital-clock-with-video/archive/refs/heads/main.zip
+   ```
+
+2. Unzip the Zip File
+   ```
+   unzip main.zip
+   ```
+
+3. Enter the Unzipped Directory
+   ```
+   cd digital-clock-with-video-main
+   ```
+
+4. Place the Script:  
    Copy the videoclock.sh script to a suitable location on your system, for example, /bin/.
    ```
    cp videoClock.sh /bin/videoClock.sh
    chmod +x /bin/videoClock.sh
    ```
 
-2. Create the Configuration Directory:  
+5. Create the Configuration Directory:  
    The script is designed to look for its configuration file in /etc/videoClock/. Create this directory:
    ```
    mkdir -p /etc/videoClock
    ```
 
-3. Create the Configuration File:  
+6. Create the Configuration File:  
    Copy the sample videoclock.conf file into the new directory.
    ```
    cp videoClock.conf /etc/videoClock/videoClock.conf
    ```
 
-4. Place the Init.d Script to Start on Boot:  
+7. Place the Init.d Script to Start on Boot:  
    Copy the videoClock script to the /etc/init.d/ folder.
    ```
    cp videoClock /etc/init.d/videoClock
@@ -58,13 +74,16 @@ apk add screen ffmpeg font-dejavu
    rc-update add videoClock default
    ```
 
-5. (Optional) If not a disk install, add the files to LBU to persist after reboot.
+8. (Optional) If not a disk install, add the files to LBU to persist after reboot.
    ```
    lbu add /bin/videoClock.sh /etc/init.d/videoClock
    lbu commit -d
    ```
 
-7. Edit the Configuration:  
+9. Upload a Looping Background Video
+    Using a program like FileZilla or WinSCP, connect using SSH and upload a looping background video file.  The default location is ```/root/background.mp4``` but can be anywhere when set in the config file.
+    
+10. Edit the Configuration:  
    Open /etc/videoClock/videoClock.conf with a text editor and adjust the settings to match your system and preferences. See the Configuration section below for details.
 
 ## **Configuration**
@@ -73,7 +92,7 @@ All settings are managed in /etc/videoClock/videoClock.conf.
 
 | Setting | Description | Example |
 | :---- | :---- | :---- |
-| VIDEO\_SOURCE | The full path to your background video file. | /root/videos/background.mp4 |
+| VIDEO\_SOURCE | The full path to your background video file. | /root/background.mp4 |
 | FONT\_FILE | The full path to the .ttf font file you want to use. | /usr/share/fonts/dejavu/DejaVuSans-Bold.ttf |
 | TEXT\_COLOR | The color of the clock text. Can be a name or hex code. | white or \#FFFFFF |
 | TEXT\_BG\_COLOR | The color and opacity of the box behind the text. Format is color@opacity (0.0 to 1.0). | black@0.5 |
