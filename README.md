@@ -3,7 +3,7 @@ Written by: XtendedGreg July 7, 2025 [XtendedGreg Youtube Channel](https://www.y
 
 ## Description
 
-A configurable shell script that displays a real-time clock over a looping video background on a Linux framebuffer device. This project is optimized for low-power devices like the Raspberry Pi running minimal operating systems such as Alpine Linux.
+- A configurable shell script that displays a real-time clock over a looping video background on a Linux framebuffer device. This project is optimized for low-power devices like the Raspberry Pi running minimal operating systems such as Alpine Linux.
 
 ## **Features**
 
