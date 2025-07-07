@@ -123,6 +123,15 @@ fi
 
 echo "Detected screen resolution: ${SCREEN_W}x${SCREEN_H}"
 
+# Disable framebuffer cursor blinking if possible
+if [ -w "$CURSOR_BLINK_FILE" ]; then
+    ORIGINAL_CURSOR_STATE=$(cat "$CURSOR_BLINK_FILE")
+    echo 0 > "$CURSOR_BLINK_FILE"
+    echo "Framebuffer cursor blinking disabled."
+else
+    echo "Warning: Cannot write to '$CURSOR_BLINK_FILE'. Cursor may blink. Run as root."
+fi
+
 # --- Step 1: Pre-scale the video to a temporary file ---
 echo "Pre-scaling video to ${SCREEN_W}x${SCREEN_H}. This may take a moment..."
 # -y: Overwrite output file if it exists
@@ -145,15 +154,6 @@ echo "Pre-scaling complete. Temporary file created at '$TEMP_VIDEO_FILE'."
 
 # --- Step 2: Run the clock using the pre-scaled video ---
 echo "Starting video clock. Press Ctrl+C to stop."
-
-# Disable framebuffer cursor blinking if possible
-if [ -w "$CURSOR_BLINK_FILE" ]; then
-    ORIGINAL_CURSOR_STATE=$(cat "$CURSOR_BLINK_FILE")
-    echo 0 > "$CURSOR_BLINK_FILE"
-    echo "Framebuffer cursor blinking disabled."
-else
-    echo "Warning: Cannot write to '$CURSOR_BLINK_FILE'. Cursor may blink. Run as root."
-fi
 
 # The 'scale' filter is no longer needed here.
 # The input (-i) is now our temporary, pre-scaled video.
