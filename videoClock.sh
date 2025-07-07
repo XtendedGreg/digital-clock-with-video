@@ -151,23 +151,26 @@ fi
 
 # The 'scale' filter is no longer needed here.
 # The input (-i) is now our temporary, pre-scaled video.
-ffmpeg \
-    -re \
-    -stream_loop -1 \
-    -i "$TEMP_VIDEO_FILE" \
-    -vf "drawtext=expansion=strftime:fontfile='${FONT_FILE}':\
-                  text='%A, %B %d, %Y %Z':\
-                  fontcolor=${TEXT_COLOR}:\
-                  box=1:boxcolor=${TEXT_BG_COLOR}:boxborderw=10:\
-                  fontsize=${SMALL_FONT_SIZE}:\
-                  x=(w-text_w)/2:\
-                  y=(h/2)-text_h-(${LARGE_FONT_SIZE}/2)-10, \
-         drawtext=expansion=strftime:fontfile='${FONT_FILE}':\
-                  text='${TIME_TEXT_FORMAT}':\
-                  fontcolor=${TEXT_COLOR}:\
-                  box=1:boxcolor=${TEXT_BG_COLOR}:boxborderw=15:\
-                  fontsize=${LARGE_FONT_SIZE}:\
-                  x=(w-text_w)/2:\
-                  y=(h-text_h)/2" \
-    -pix_fmt bgra \
-    -f fbdev "$FRAMEBUFFER"
+while true; do
+    ffmpeg \
+        -re \
+        -stream_loop -1 \
+        -i "$TEMP_VIDEO_FILE" \
+        -vf "drawtext=expansion=strftime:fontfile='${FONT_FILE}':\
+                      text='%A, %B %d, %Y %Z':\
+                      fontcolor=${TEXT_COLOR}:\
+                      box=1:boxcolor=${TEXT_BG_COLOR}:boxborderw=10:\
+                      fontsize=${SMALL_FONT_SIZE}:\
+                      x=(w-text_w)/2:\
+                      y=(h/2)-text_h-(${LARGE_FONT_SIZE}/2)-10, \
+             drawtext=expansion=strftime:fontfile='${FONT_FILE}':\
+                      text='${TIME_TEXT_FORMAT}':\
+                      fontcolor=${TEXT_COLOR}:\
+                      box=1:boxcolor=${TEXT_BG_COLOR}:boxborderw=15:\
+                      fontsize=${LARGE_FONT_SIZE}:\
+                      x=(w-text_w)/2:\
+                      y=(h-text_h)/2" \
+        -pix_fmt bgra \
+        -f fbdev "$FRAMEBUFFER"
+    sleep 1
+done
