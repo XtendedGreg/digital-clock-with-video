@@ -4,6 +4,8 @@ Written by: XtendedGreg July 7, 2025 [XtendedGreg Youtube Channel](https://www.y
 ## Description
 
 - A configurable shell script that displays a real-time clock over a looping video background on a Linux framebuffer device. This project is optimized for low-power devices like the Raspberry Pi running minimal operating systems such as Alpine Linux.
+- This script and its use is covered in this [XtendedGreg Youtube stream](https://youtube.com/live/aa3h_ntRh4I).
+[![Watch the video](https://img.youtube.com/vi/aa3h_ntRh4I/maxresdefault.jpg)](https://youtube.com/live/aa3h_ntRh4I)
 
 ## **Features**
 
@@ -81,9 +83,13 @@ apk add screen ffmpeg font-dejavu
    ```
 
 9. Upload a Looping Background Video
-    Using a program like FileZilla or WinSCP, connect using SSH and upload a looping background video file.  The default location is ```/root/background.mp4``` but can be anywhere when set in the config file.
+   Using a program like FileZilla or WinSCP, connect using SSH and upload a looping background video file.  The default location is ```/root/background.mp4``` but can be anywhere when set in the config file.  Once it is uploaded, add it to LBU so that it also persists after reboot using these commands:
+   ```
+   lbu add /root/background.mp4 #<-- change to the path where you put your background video file
+   lbu commit -d
+   ```
     
-10. Edit the Configuration:  
+11. Edit the Configuration:  
    Open /etc/videoClock/videoClock.conf with a text editor and adjust the settings to match your system and preferences. See the Configuration section below for details.
 
 ## **Configuration**
